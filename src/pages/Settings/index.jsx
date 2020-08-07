@@ -8,13 +8,6 @@ function Settings() {
 
   const html = document.querySelector("html");
 
-  // const getStyle = (element, style) => window.getComputedStyle(element).getPropertyValue(style);
-  // const lightMode = {
-  //   background: getStyle(html, "--background"),
-  //   backgroundHeader: getStyle(html, "--background-header"),
-  //   colorText: getStyle(html, "--color-text"),
-  // };
-
   const lightMode = {
     background: "#FFFFFF",
     backgroundHeader: "#000000",
