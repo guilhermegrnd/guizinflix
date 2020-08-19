@@ -4,6 +4,7 @@ import Menu from '../../components/Header/index';
 import BannerMain from '../../components/BannerMain/index';
 import Carousel from '../../components/Carousel/index';
 import categoriesRepository from '../../repositories/categories';
+import settingsRepository from '../../repositories/settings';
 import './index.css';
 
 function Home() {
@@ -12,6 +13,26 @@ function Home() {
   useEffect(() => {
     categoriesRepository.getAllWithVideos().then((data) => {
       setCategories(data);
+    }).catch((err) => {
+      console.log(err);
+    });
+
+    settingsRepository.getAll().then((data) => {
+      if(data.darkTheme) {
+        const html = document.querySelector("html");
+
+        const transformKey = key => "--" + key.replace(/([A-Z])/, "-$1").toLowerCase();
+          
+        const changeColors = (colors) => {
+          Object.keys(colors).map(key => html.style.setProperty(transformKey(key), colors[key]));
+        };
+
+        changeColors({
+          background: "#000000",
+          backgroundHeader: "#FFFFFF",
+          colorText: "#FFFFFF"
+        });
+      }
     }).catch((err) => {
       console.log(err);
     });
@@ -34,7 +55,7 @@ function Home() {
               <BannerMain
                 videoTitle={item.videos[0].title}
                 url={item.videos[0].url}
-                videoDescription="O que é Front-end? "
+                videoDescription={item.videos[0].description}
               />
 
               <Carousel
